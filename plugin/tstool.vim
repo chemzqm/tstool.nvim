@@ -34,7 +34,7 @@ function! s:JestStart(...)
   endw
   if !exists('name') | return | endif
   let cmd = 'jest '. f . " -t '". name ."'"
-  execute 'belowright 5new'
+  belowright vs +enew
   setl winfixheight
   setl norelativenumber
   let s:test_bufnr = bufnr('%')
@@ -49,7 +49,7 @@ endfunction
 function! s:OnExit(job_id, status, event) dict
   if a:status == 0
     echohl MoreMsg | echo 'Test passed!' | echohl None
-    execute 'silent! bd! '.self.buffer_nr
+    "execute 'silent! bd! '.self.buffer_nr
   endif
 endfunction
 
