@@ -14,12 +14,19 @@ function! s:Run(cwd, command)
   execute 'lcd ' . old_cwd
 endfunction
 
-function! tsc#open(bufnr)
+function! tsc#open(bufnr) abort
+  if bufwinnr(a:bufnr) != -1
+    return
+  endif
   execute 'belowright 5new'
   setl winfixheight
   setl norelativenumber
   execute 'b '.a:bufnr
-  execute 'wincmd p'
+  call timer_start(10, function('s:on_open'))
+endfunction
+
+function! s:on_open(...) abort
+  quit
 endfunction
 
 function! tsc#start(...)

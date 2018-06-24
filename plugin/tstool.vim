@@ -1,4 +1,4 @@
-if exists('did_tstool_loaded') || v:version < 700 || !has('nvim')
+if exists('did_tstool_loaded') || v:version < 700
   finish
 endif
 let did_tstool_loaded = 1
@@ -25,7 +25,7 @@ function! s:JestStart(...)
   let lnum = line('.')
   while lnum >= 1
     let line = getline(lnum)
-    let ms = matchlist(line, '\%(test\|it\)(''\(.*\)'',')
+    let ms = matchlist(line, '^\s\+\%(test\|it\)(''\(.*\)'',')
     if !empty(ms)
       let name = ms[1]
       break
@@ -57,4 +57,6 @@ command! -nargs=0 Tslint :call tslint#lint()
 command! -nargs=* Tsc    :call tsc#start(<f-args>)
 command! -nargs=* Tstest :call s:JestStart(<f-args>)
 
-autocmd VimEnter * call s:init()
+if has('nvim')
+  autocmd VimEnter * call s:init()
+endif
