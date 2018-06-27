@@ -108,7 +108,7 @@ export default class TsPlugin {
           this.state = State.Error
         }
         let obj = await this.nvim.call('getqflist', [{title: 1}]) as any
-        let action = obj.title && obj.title.indexOf('Results of tsc') != -1 ? 'r' : ' '
+        let action = obj.title && /tsc$/.test(obj.title) ? 'r' : ' '
         await this.nvim.call('setqflist', [this.errors, action, 'Results of tsc'])
       }
     }
