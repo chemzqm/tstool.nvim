@@ -107,14 +107,9 @@ export default class TsPlugin {
         } else {
           this.state = State.Error
         }
-        if (this.errors.length) {
-          await this.nvim.call('setqflist', [this.errors, 'r', 'Results of tsc'])
-        } else {
-          let obj = await this.nvim.call('getqflist', [{title: 1}]) as any
-          if (obj.title && obj.title == 'Results of tsc') {
-            await this.nvim.call('setqflist', [this.errors, 'r', 'Results of tsc'])
-          }
-        }
+        let obj = await this.nvim.call('getqflist', [{title: 1}]) as any
+        let action = obj.title && obj.title == 'Results of tsc' ? 'r' : ' '
+        await this.nvim.call('setqflist', [this.errors, action, 'Results of tsc'])
       }
     }
     return
