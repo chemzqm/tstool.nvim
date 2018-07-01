@@ -18,7 +18,7 @@ function! tsc#open(bufnr) abort
   if bufwinnr(a:bufnr) != -1
     return
   endif
-  execute 'belowright 5new'
+  execute 'keepjumps belowright 5new'
   setl winfixheight
   setl norelativenumber
   execute 'b '.a:bufnr
